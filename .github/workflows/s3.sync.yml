@@ -29,4 +29,5 @@ jobs:
           aws configure set default.region ap-south-1
 
       - name: Upload files to S3
-        run: aws s3 sync ./hdlite s3://hdprobuckets
+        run: aws s3 sync . s3://hdprobuckets --exclude ".git/*" --exclude ".github/*" --exclude ".venv/*"
+
