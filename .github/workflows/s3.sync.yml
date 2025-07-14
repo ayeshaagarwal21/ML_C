@@ -29,12 +29,9 @@ jobs:
           aws configure set default.region ap-south-1
 
       - name: Upload specific files to S3
-        run: |
-         ls -al
-         find . -name "insurance.csv"
+        run:
          aws s3 cp main.py s3://hdprobuckets/
-         aws s3 cp ./path/to/insurance.csv s3://hdprobuckets/
+         aws s3 cp helt/insurance.csv s3://hdprobuckets/helt-insurance.csv
+         aws s3 cp hdlite/insurance.csv s3://hdprobuckets/hdlite-insurance.csv
          aws s3 cp requirements.txt s3://hdprobuckets/
-
-
 
