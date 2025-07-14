@@ -1,26 +1,33 @@
 name: Sync Local Folder with S3
 
-on: 
- push:
-   branches:
-     -main
+on:
+  push:
+    branches:
+      - main
 
 jobs:
- upload-to-s3:
-   runs-on: ubuntu-latest
-   steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+  upload-to-s3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install AWS CLI
+        run: |
+          sudo apt update
+          sudo apt install -y awscli
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+          aws configure set default.region ap-south-1
 
-      - name: Upload files to s3
-        run:
-          aws s3 sync ./hdlite  s3://hdprobuckets
+      - name: Upload files to S3
+        run: aws s3 sync ./hdlite s3://hdprobuckets
+
           
 
