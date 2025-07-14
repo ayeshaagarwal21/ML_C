@@ -28,6 +28,10 @@ jobs:
           aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
           aws configure set default.region ap-south-1
 
-      - name: Upload files to S3
-        run: aws s3 sync . s3://hdprobuckets --exclude ".git/*" --exclude ".github/*" --exclude ".venv/*"
+      - name: Upload specific files to S3
+        run: |
+         aws s3 cp main.py s3://hdprobuckets/
+         aws s3 cp insurance.csv s3://hdprobuckets/
+         aws s3 cp requirements.txt s3://hdprobuckets/
+
 
