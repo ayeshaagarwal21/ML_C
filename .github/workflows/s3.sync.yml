@@ -30,8 +30,11 @@ jobs:
 
       - name: Upload specific files to S3
         run: |
+         ls -al
+         find . -name "insurance.csv"
          aws s3 cp main.py s3://hdprobuckets/
-         aws s3 cp insurance.csv s3://hdprobuckets/
+         aws s3 cp ./path/to/insurance.csv s3://hdprobuckets/
          aws s3 cp requirements.txt s3://hdprobuckets/
+
 
 
